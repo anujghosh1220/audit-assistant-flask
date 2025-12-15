@@ -1,10 +1,15 @@
 from flask import Flask, render_template, request
 import os
 
+# Get the absolute path to the templates directory
+base_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+template_dir = os.path.join(base_dir, 'templates')
+static_dir = os.path.join(base_dir, 'static')
+
 app = Flask(__name__, 
-            static_folder='static',
+            static_folder=static_dir,
             static_url_path='',
-            template_folder='templates')
+            template_folder=template_dir)
 
 # Configuration
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '3a359880a6ca37316e5e9565d7f731f89e676a0c3956a286')

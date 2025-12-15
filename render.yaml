@@ -3,13 +3,13 @@ services:
     name: audit-assistant
     env: python
     buildCommand: |
-      pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app --worker-tmp-dir /dev/shm --timeout 120
+      pip install -e .
+    startCommand: gunicorn --worker-tmp-dir /dev/shm --timeout 120 --bind 0.0.0.0:10000 wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
       - key: FLASK_APP
-        value: wsgi.py
+        value: audit_assistant.app
       - key: FLASK_ENV
         value: production
       - key: SECRET_KEY
