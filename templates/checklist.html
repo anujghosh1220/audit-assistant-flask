@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Checklist Management{% endblock %}
+
+{% block content %}
+<h1 class="mt-4">Checklist Management</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Master</a></li>
+    <li class="breadcrumb-item active">Checklist</li>
+</ol>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-list-check me-1"></i>
+        Audit Checklist
+        <div class="float-end">
+            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#newChecklistModal">
+                <i class="bi bi-plus-circle"></i> New Checklist
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Checklist Name</th>
+                        <th>Category</th>
+                        <th>Items</th>
+                        <th>Last Updated</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Financial Controls</td>
+                        <td>Finance</td>
+                        <td>24</td>
+                        <td>2023-05-10</td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-success"><i class="bi bi-clipboard-check"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>IT Security</td>
+                        <td>IT</td>
+                        <td>36</td>
+                        <td>2023-05-12</td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-success"><i class="bi bi-clipboard-check"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>HR Compliance</td>
+                        <td>Human Resources</td>
+                        <td>18</td>
+                        <td>2023-04-28</td>
+                        <td><span class="badge bg-warning">Draft</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-success"><i class="bi bi-clipboard-check"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- New Checklist Modal -->
+<div class="modal fade" id="newChecklistModal" tabindex="-1" aria-labelledby="newChecklistModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newChecklistModalLabel">Create New Checklist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newChecklistForm">
+                    <div class="mb-3">
+                        <label for="checklistName" class="form-label">Checklist Name</label>
+                        <input type="text" class="form-control" id="checklistName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="checklistCategory" class="form-label">Category</label>
+                        <select class="form-select" id="checklistCategory" required>
+                            <option value="">Select category...</option>
+                            <option value="Finance">Finance</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">Human Resources</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Compliance">Compliance</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="checklistDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="checklistDescription" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" form="newChecklistForm" class="btn btn-primary">Create Checklist</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Checklist Items Modal -->
+<div class="modal fade" id="checklistItemsModal" tabindex="-1" aria-labelledby="checklistItemsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checklistItemsModalLabel">Checklist Items</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6>Financial Controls Checklist</h6>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                        <i class="bi bi-plus"></i> Add Item
+                    </button>
+                </div>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="item1" checked>
+                            <label class="form-check-label" for="item1">
+                                Verify bank reconciliations for all accounts
+                            </label>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="item2">
+                            <label class="form-check-label" for="item2">
+                                Review authorization of transactions
+                            </label>
+                        </div>
+                    </div>
+                    <!-- More items would be dynamically loaded -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
